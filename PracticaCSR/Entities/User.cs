@@ -2,6 +2,10 @@
 {
     public class User
     {
+        public User()
+        {
+            
+        }
         public User(int id, string firstName, string lastName, string password, string email, UserState state = UserState.Active)
         {
             Id = id;

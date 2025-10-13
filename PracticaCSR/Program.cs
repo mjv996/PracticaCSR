@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using PracticaCSR.Data;
 using PracticaCSR.Repositories;
 using PracticaCSR.Services;
 using System;
@@ -14,6 +16,9 @@ builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddDbContext <PracticaDbContext> 
+    (dbContextOptions => dbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:PracticaDBConnectionString"]));
 
 var app = builder.Build();
 

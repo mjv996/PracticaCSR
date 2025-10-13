@@ -1,4 +1,7 @@
-﻿namespace PracticaCSR.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PracticaCSR.Entities
 {
     public class Contact
     {
@@ -9,10 +12,13 @@
             FirstName = firstName;
             LastName = lastName;
         }
-        
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int UserId { get; set; }
+        [ForeignKey("UserId")]
         public User User { get; set; }
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
