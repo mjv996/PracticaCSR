@@ -24,7 +24,8 @@ namespace PracticaCSR.Data
                 Email = "luis@gmail.com",
                 Password = "lamismadesiempre",
                 LastName = "luismiguel@gmail.com",
-                State = UserState.Active
+                State = UserState.Active,
+                Role = "Usuario"
             };
 
             modelBuilder.Entity<User>().HasData(luis);

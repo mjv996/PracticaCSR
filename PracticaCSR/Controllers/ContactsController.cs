@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PracticaCSR.Models.DTOs.Requests;
 using PracticaCSR.Services;
+using System.Security.Claims;
 
 namespace PracticaCSR.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ContactsController : ControllerBase
     {
@@ -36,6 +39,12 @@ namespace PracticaCSR.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateAndUpdateContactDto contactDto)
         {
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
+            if (userRole != "Usuario")
+                return Forbid();
+
             if (contactDto == null)
                 return BadRequest("Invalid contact data.");
 

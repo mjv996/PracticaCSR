@@ -1,9 +1,17 @@
-﻿using PracticaCSR.Entities;
+﻿using PracticaCSR.Data;
+using PracticaCSR.Entities;
 
 namespace PracticaCSR.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly PracticaDbContext _context;
+
+        public UserRepository(PracticaDbContext context)
+        {
+            _context = context;
+        }
+
         private static List<User> _users = new()
         {
             new User(1, "Alice", "Smith", "1234", "alice@example.com"),
@@ -54,6 +62,11 @@ namespace PracticaCSR.Repositories
 
             _users.Remove(user);
             return true;
+        }
+
+        public User? GetByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
         }
     }
 }
